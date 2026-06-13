@@ -11,7 +11,7 @@ export class CartService {
     }
   }
 
-  // 1. Busca e calcula totais
+  // Busca e calcula totais
   async getCart(cartId: number) {
     const carrinho = await prisma.carrinho.findUnique({
       where: { id: cartId },
@@ -50,10 +50,10 @@ export class CartService {
     };
   }
 
-  // 2. Adiciona item
+  // Adiciona item
   async addItem(cartId: number, produtoId: number, quantidade: number) {
-    await this._verificarCarrinhoAberto(cartId); // Trava do PDF
-    if (quantidade <= 0) throw new Error('A quantidade deve ser maior que zero.'); // Trava do PDF
+    await this._verificarCarrinhoAberto(cartId); 
+    if (quantidade <= 0) throw new Error('A quantidade deve ser maior que zero.'); 
 
     const produto = await prisma.produto.findUnique({ where: { id: produtoId } });
     if (!produto) throw new Error('Produto não encontrado');
@@ -81,11 +81,10 @@ export class CartService {
     return this.getCart(cartId);
   }
 
-  // 3. Atualiza quantidade exata
+  // Atualiza quantidade exata
   async updateItemQuantity(cartId: number, produtoId: number, quantidade: number) {
-    await this._verificarCarrinhoAberto(cartId); // Trava do PDF
-    if (quantidade <= 0) throw new Error('A quantidade deve ser maior que zero.'); // Trava do PDF
-
+    await this._verificarCarrinhoAberto(cartId); 
+    if (quantidade <= 0) throw new Error('A quantidade deve ser maior que zero.'); 
     const produto = await prisma.produto.findUnique({ where: { id: produtoId } });
     if (!produto) throw new Error('Produto não encontrado');
 
@@ -106,26 +105,26 @@ export class CartService {
     return this.getCart(cartId);
   }
 
-  // 4. Remove item
+  // Remove item
   async removeItem(cartId: number, produtoId: number) {
-    await this._verificarCarrinhoAberto(cartId); // Trava do PDF
+    await this._verificarCarrinhoAberto(cartId); 
 
     const itemExistente = await prisma.itemCarrinho.findFirst({
       where: { carrinhoId: cartId, produtoId: produtoId }
     });
 
-    if (!itemExistente) throw new Error('Produto não encontrado no carrinho para remoção'); // Trava do PDF
+    if (!itemExistente) throw new Error('Produto não encontrado no carrinho para remoção'); 
 
     await prisma.itemCarrinho.delete({ where: { id: itemExistente.id } });
     return this.getCart(cartId);
   }
 
-  // 5. Aplica cupom
+  // Aplica cupom
   async applyCoupon(cartId: number, codigoCupom: string) {
-    await this._verificarCarrinhoAberto(cartId); // Trava do PDF
+    await this._verificarCarrinhoAberto(cartId); 
 
     const cupom = await prisma.cupom.findUnique({ where: { codigoCupom } });
-    if (!cupom) throw new Error('Cupom inválido'); // Trava do PDF
+    if (!cupom) throw new Error('Cupom inválido'); 
 
     await prisma.carrinho.update({
       where: { id: cartId },
@@ -134,9 +133,9 @@ export class CartService {
     return this.getCart(cartId);
   }
 
-  // 6. NOVO: Remove cupom
+  // Remove cupom
   async removeCoupon(cartId: number) {
-    await this._verificarCarrinhoAberto(cartId); // Trava do PDF
+    await this._verificarCarrinhoAberto(cartId); 
 
     await prisma.carrinho.update({
       where: { id: cartId },
@@ -145,7 +144,7 @@ export class CartService {
     return this.getCart(cartId);
   }
 
-  // 7. Finaliza a compra e dá baixa no estoque (Transação Atômica)
+  // Finaliza a compra e dá baixa no estoque (Transação Atômica)
   async checkout(cartId: number) {
     const carrinho = await prisma.carrinho.findUnique({
       where: { id: cartId },
@@ -158,7 +157,7 @@ export class CartService {
 
     // Inicia uma transação: ou tudo dá certo, ou nada é salvo no banco
     await prisma.$transaction(async (tx) => {
-      // 1. Verifica e deduz o estoque de cada item
+      // Verifica e deduz o estoque de cada item
       for (const item of carrinho.itens) {
         // Busca o estoque atualizado em tempo real dentro da transação
         const produto = await tx.produto.findUnique({ where: { id: item.produtoId } });
@@ -175,7 +174,7 @@ export class CartService {
         });
       }
 
-      // 2. Muda o status do carrinho para FINALIZADO
+      // Muda o status do carrinho para FINALIZADO
       await tx.carrinho.update({
         where: { id: cartId },
         data: { status: 'FINALIZADO' }

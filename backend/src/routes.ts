@@ -5,7 +5,7 @@ import { CartService } from './services/CartService';
 const routes = Router();
 const cartService = new CartService();
 
-// 1. Catálogo de Produtos
+// Catálogo de Produtos
 routes.get('/produtos', async (req, res) => {
   try {
     const produtos = await prisma.produto.findMany({ orderBy: { id: 'asc' } });
@@ -15,7 +15,7 @@ routes.get('/produtos', async (req, res) => {
   }
 });
 
-// 2. RADAR DE SESSÃO: Descobre qual é o carrinho ABERTO mais recente
+// RADAR DE SESSÃO: Descobre qual é o carrinho ABERTO mais recente
 routes.get('/sessao/carrinho-ativo', async (req, res) => {
   try {
     let carrinhoAberto = await prisma.carrinho.findFirst({
@@ -33,7 +33,7 @@ routes.get('/sessao/carrinho-ativo', async (req, res) => {
   }
 });
 
-// 3. Busca o carrinho pelo ID
+// Busca o carrinho pelo ID
 routes.get('/carrinho/:id', async (req, res) => {
   try {
     const id = Number(req.params.id);
@@ -50,7 +50,7 @@ routes.get('/carrinho/:id', async (req, res) => {
   }
 });
 
-// 4. Adiciona um item ao carrinho
+// Adiciona um item ao carrinho
 routes.post('/carrinho/:id/item', async (req, res) => {
   try {
     const { produtoId, quantidade } = req.body;
@@ -61,7 +61,7 @@ routes.post('/carrinho/:id/item', async (req, res) => {
   }
 });
 
-// 5. Atualiza a quantidade de um item
+// Atualiza a quantidade de um item
 routes.put('/carrinho/:id/item', async (req, res) => {
   try {
     const { produtoId, quantidade } = req.body;
@@ -72,7 +72,7 @@ routes.put('/carrinho/:id/item', async (req, res) => {
   }
 });
 
-// 6. Remove um item do carrinho
+// Remove um item do carrinho
 routes.delete('/carrinho/:id/item/:produtoId', async (req, res) => {
   try {
     const cart = await cartService.removeItem(Number(req.params.id), Number(req.params.produtoId));
@@ -82,7 +82,7 @@ routes.delete('/carrinho/:id/item/:produtoId', async (req, res) => {
   }
 });
 
-// 7. Aplica um cupom
+// Aplica um cupom
 routes.post('/carrinho/:id/cupom', async (req, res) => {
   try {
     const { codigoCupom } = req.body;
@@ -93,7 +93,7 @@ routes.post('/carrinho/:id/cupom', async (req, res) => {
   }
 });
 
-// 8. Remove o cupom
+// Remove o cupom
 routes.delete('/carrinho/:id/cupom', async (req, res) => {
   try {
     const cart = await cartService.removeCoupon(Number(req.params.id));
@@ -103,7 +103,7 @@ routes.delete('/carrinho/:id/cupom', async (req, res) => {
   }
 });
 
-// 9. Finaliza a compra e dá baixa no estoque 
+// Finaliza a compra e dá baixa no estoque 
 routes.post('/carrinho/:id/checkout', async (req, res) => {
   try {
     const cartId = Number(req.params.id);
