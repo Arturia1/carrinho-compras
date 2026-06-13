@@ -1,0 +1,55 @@
+### ==========================================
+### TECHMARKET API - TESTES DE ROTAS
+### ==========================================
+
+### 1. Listar Catálogo de Produtos
+GET http://localhost:3000/produtos
+
+### 2. Radar de Sessão: Descobrir Carrinho Ativo
+GET http://localhost:3000/sessao/carrinho-ativo
+
+### 3. Buscar Carrinho pelo ID (Altere o "1" conforme necessário)
+GET http://localhost:3000/carrinho/1
+
+### ==========================================
+### MANIPULAÇÃO DO CARRINHO
+### ==========================================
+
+### 4. Adicionar Item ao Carrinho (Ex: Adicionar 2 unidades do Produto 1)
+POST http://localhost:3000/carrinho/1/item
+Content-Type: application/json
+
+{
+  "produtoId": 1,
+  "quantidade": 2
+}
+
+### 5. Alterar Quantidade de um Item (Ex: Mudar para 5 unidades)
+PUT http://localhost:3000/carrinho/1/item
+Content-Type: application/json
+
+{
+  "produtoId": 1,
+  "quantidade": 5
+}
+
+### 6. Remover Item do Carrinho (Ex: Remover o Produto 1)
+DELETE http://localhost:3000/carrinho/1/item/1
+
+### ==========================================
+### CUPONS E FINALIZAÇÃO
+### ==========================================
+
+### 7. Aplicar Cupom de Desconto (Use 10OFF ou 15OFF)
+POST http://localhost:3000/carrinho/1/cupom
+Content-Type: application/json
+
+{
+  "codigoCupom": "15OFF"
+}
+
+### 8. Remover Cupom do Carrinho
+DELETE http://localhost:3000/carrinho/1/cupom
+
+### 9. Finalizar Compra (Checkout e Baixa de Estoque)
+POST http://localhost:3000/carrinho/1/checkout

@@ -1,0 +1,20 @@
+# Dependências
+node_modules/
+
+# Segurança e Variáveis de Ambiente (CRÍTICO)
+.env
+.env.*
+
+# Pastas de Build (Código compilado do TypeScript e do React)
+dist/
+build/
+out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
