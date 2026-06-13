@@ -23,31 +23,31 @@ Este projeto é a implementação de um desafio técnico full-stack focado na co
 
 ### 2. Configurando o Back-end
 1. Navegue até a pasta do servidor:
-   cd backend
+   ```cd backend```
 
 2. Instale as dependências:
-    npm install
+    ```npm install```
 
 3. Crie um arquivo .env na raiz da pasta backend/ e adicione a sua string de conexão:
-    DATABASE_URL="sua_string_de_conexao_postgresql_aqui"
+    ```DATABASE_URL="sua_string_de_conexao_postgresql_aqui"```
 
 4. Sincronize o banco de dados e popule o catálogo inicial (Seed):
-    npx prisma db push
-    npx tsx prisma/seed.ts
+    ```npx prisma db push```
+    ```npx tsx prisma/seed.ts```
 
 5. Inicie o servidor:
-    npm run dev
+    ```npm run dev```
     A API estará rodando em http://localhost:3000
 
 ### 3. Configurando o Front-end
 1. Em um novo terminal, navegue até a pasta do cliente:
-    cd frontend
+    ```cd frontend```
 
 2. Instale as dependências:
-    npm install
+    ```npm install```
 
 3. Inicie a aplicação React:
-    npm run dev
+   ``` npm run dev```
 
 ### 4. Decisões de Design e Arquitetura
 O projeto foi construído priorizando a Separação de Responsabilidades e a Integridade dos Dados:
