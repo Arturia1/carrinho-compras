@@ -68,3 +68,10 @@ Módulo de PDV (Frente de Caixa): Evoluir a interface atual com um menu de admin
 Painel de Gestão de Estoque: Implementar rotas protegidas onde um gestor possa lançar "Entradas de Mercadoria" para reabastecer o catálogo de forma auditável.
 
 Emissão de Nota Fiscal (NFe): Integração com um serviço de mensageria (ex: RabbitMQ/SQS) para gerar a NFe de forma assíncrona após o checkout.
+
+
+### 6 🎥 **Demonstração em Vídeo: [Clique aqui para assistir à apresentação do projeto funcionando](https://youtu.be/2jqjW5XH82E)
+
+
+
+
